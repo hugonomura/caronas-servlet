@@ -1,0 +1,116 @@
+/* posicionando os elementos dentro da pagina */
+html, body {
+  height: 100%;
+  min-height: 650px;
+  min-width: 800px;
+}
+
+section.container{
+  height: -webkit-calc(100% - 27px - 53px - 1px);
+  height: -moz-calc(100% - 27px - 53px - 1px);
+  height: calc(100% - 27px - 53px - 1px);
+}
+
+#form {
+  height: 80%;
+  min-height: 90px;
+}
+
+body {
+  min-width: 500px;
+  margin: 0;
+}
+
+.container {
+  width: 85%;
+  padding-top: 1px;
+  padding-left: 7.5%;
+  padding-right: 7.5%;
+  float: left;
+}
+
+#logo {
+  font-size: 22px;
+  float: left;
+  margin: 0;
+  padding: 0;
+}
+
+#menu {
+  float: right;
+  width: 50%;
+}
+
+#menu ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+#menu ul li a {
+  padding-left: 10%;
+  padding-right: 10%;
+  float: right;
+  margin: auto;
+}
+
+#form {
+  margin: 40px 25%;
+}
+
+#form p, #form header h1 {
+  text-align: center;
+}
+
+footer.container p {
+  text-align: center;
+}
+
+section p {
+  width: 80%;
+  margin-left: 10%;
+  line-height: 200%;
+  clear: both;
+}
+
+span.rotulo {
+  float: left;
+  font-weight: bold;
+}
+
+span.campo {
+  float: right;
+}
+/* elementos posicionados dentro da pagina */
+
+/* definindo cores dos elementos e demais elementos mais visuais */
+header.container, footer.container {
+  background: #697cfb;
+}
+
+#logo a, footer.container p, #menu a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#menu a {
+  border: solid #fff 1px;
+}
+
+#menu a:hover {
+  background: #102ef8;
+}
+
+#menu a.active {
+  background: #c3cafd;
+  color: #000;
+}
+
+#form {
+  border: solid 1px #ebedfe;
+  -webkit-border-radius: 12px; 
+  -moz-border-radius: 12px; 
+  border-radius: 12px;
+}
+
+/* cores definidas */
