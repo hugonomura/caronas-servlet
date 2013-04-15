@@ -60,7 +60,17 @@ public class EfetuaLogin extends HttpServlet {
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    processRequest(request, response);
+    String username = request.getParameter("login");
+    String senha = request.getParameter("senha");
+    PrintWriter retorno = response.getWriter();
+    if(username.equals(senha) && !username.isEmpty()){
+      // login efetuado com sucesso
+      retorno.print(this.constroiPagina(username));
+    }else{
+      // falha ao executar o login
+      retorno.print(this.constroiPagina(""));
+    }
+    retorno.close();
   }
 
   /**
@@ -75,17 +85,7 @@ public class EfetuaLogin extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-    String username = request.getParameter("login");
-    String senha = request.getParameter("senha");
-    PrintWriter retorno = response.getWriter();
-    if(username.equals(senha) && !username.isEmpty()){
-      // login efetuado com sucesso
-      retorno.print(this.constroiPagina(username));
-    }else{
-      // falha ao executar o login
-      retorno.print(this.constroiPagina(""));
-    }
-    retorno.close();
+      processRequest(request, response);
   }
   
   private String constroiPagina(String usuario){
