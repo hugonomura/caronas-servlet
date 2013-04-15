@@ -85,7 +85,8 @@ public class EfetuaLogin extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-      processRequest(request, response);
+//      processRequest(request, response);
+    this.doGet(request, response);
   }
   
   private String constroiPagina(String usuario){
