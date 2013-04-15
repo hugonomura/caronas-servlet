@@ -9,7 +9,7 @@ Definir um nome para o projeto como, por exemplo, 'Caronas'.
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img7.png">](#)  
   
 Clique em **Próximo**.  
-Selecione o servidor **Apache**.  
+Selecione o servidor **Apache Tomcat**.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img8.png">](#)  
   
 Clique em **Finalizar**.  
@@ -29,7 +29,7 @@ Como já temos um **index.html**, podemos excluir o arquivo **index.jsp**, novam
 --
 Antes de implementarmos nosso **Servlet**, precisamos editar algumas coisas dentro do nosso `form`.  
 Como não queremos que a senha fique visível, iremos usar o método **post** e nossa **action** sera o nome do nosso **Servlet**, nesse caso, iremos chamá-lo de **EfetuaLogin**.  
-Para que possamos recuperar os campos do lado do servidor, também devemos dar nomes aos nosso campos.  
+Para que possamos recuperar os campos do lado do servidor, também devemos dar **nomes** aos nosso campos.  
 Nosso formulário vai ficar da seguinte forma:  
   
     <form method="post" action="EfetuaLogin">
@@ -43,6 +43,7 @@ Nosso formulário vai ficar da seguinte forma:
 Para criar um **Servlet** dentro de nosso projeto, devemos clicar com o botão direito sobre o nome do nosso projeto...  
 Selecionar `Novo` > `Servlet`.  
 Temos que definir o nome da classe com mesmo nome da action do HTML, no meu caso, EfetuaLogin...  
+Colocando o **Servlet** dentro do pacote **controle**.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img11.png">](#)  
   
 Clique em **Próximo**.  
@@ -53,8 +54,10 @@ Clique em **Finalizar**.
   
 # Programando o Servlet
 --
-Toda a implementação do nosso **Servlet** será feita dentro do método `doPost`, uma vez que, estamos usando o método `post` no nosso formulário.  
+Toda a implementação do nosso **Servlet** será feita dentro do método `doGet`, uma vez que, estamos usando o método `get` no nosso formulário.  
 Podemos apagar a linha que está la.  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img15.png">](#)  
+  
 A validação que faremos será, caso os campos de **login** e **senha** possuam o mesmo valor e não sejam vazios, o login terá sido efetuado com sucesso, caso contrário, o login não será executado.  
 Para isso, devemos primeiro recuperar os campos login e senha, através do método `getParameter` do objeto `HttpServletRequest`.  
 Fazemos isso da seguinte forma:  
@@ -92,7 +95,7 @@ Assim, a implementação do método ficaria:
                 + "        <header>\n"
                 + "          <h1>Login</h1>\n"
                 + "        </header>\n"
-                + "        <form method=\"post\" action=\"EfetuaLogin\">\n"
+                + "        <form method=\"get\" action=\"EfetuaLogin\">\n"
                 + "          <p><label for=\"login\">Login</label><input type=\"text\" id=\"login\" name=\"login\"></p>\n"
                 + "          <p><label for=\"senha\">Senha</label><input type=\"password\" id=\"senha\" name=\"senha\"></p>\n"
                 + "          <p style=\"font-weight: bold;\">Login / Senha incorretos</p>\n"
@@ -153,10 +156,10 @@ Assim, a implementação do método ficaria:
   
 Basicamente, eu apenas declarei a variável pagina, abri as aspas e colei meu conteúdo dentro delas (para arrumar a indentação eu simplesmente usei selecionei o texto e pressionei `Alt` + `Shift` + `F`, também poderia clicar com o botão direito e selecionar `formatar`).  
   
-Com nosso método 'auxiliar' já implementado, podemos voltar para a implementação do método `doPost`.  
+Com nosso método 'auxiliar' já implementado, podemos voltar para a implementação do método `doGet`.  
 Devemos fazer a verificação se **username** é igual ou diferente de **senha**, sendo que eles forem iguais e **username** não for vazio, devemos chamar o método `constroiPagina` passando como parâmetro **username** e, caso contrário, chamar o método `constroiPagina` passando como parâmetro uma **String** vazia.  
 Antes de gerarmos a página, também precisamos de um `PrintWriter`, para que possamos gerar a página de retorno para o usuário.  
-Assim, devemos adicionar ao `doPost`:  
+Assim, devemos adicionar ao `doGet`:  
   
     PrintWriter retorno = response.getWriter();
     if(username.equals(senha) && !username.isEmpty()){
@@ -168,9 +171,9 @@ Assim, devemos adicionar ao `doPost`:
     }
     retorno.close();
   
-Nosso método `doPost` ficou da seguinte forma:  
+Nosso método `doGet` ficou da seguinte forma:  
   
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
       String username = request.getParameter("login");
       String senha = request.getParameter("senha");
@@ -195,3 +198,8 @@ O resultado esperado após a implementação de tudo é:
 * Caso `Login` e `Senha` tiverem o mesmo valor e forem diferentes de vazio:  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img14.png">](#)  
   
+--
+  
+Note que, ao enviarmos a senha, não existe nenhum tipo de tratamento.  
+[<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img16.png">](#)  
+Que tal mudar o método de envio do formulário para `GET`? Lembre-se que, devemos editar o método `doPost` também.  
