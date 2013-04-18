@@ -128,7 +128,7 @@ Assim, a implementação do método ficaria:
                 + "      <nav id=\"menu\">\n"
                 + "        <ul>\n"
                 + "          <li><a href=\"index.html\" class=\"active\">Inicio</a></li>\n"
-                + "          <li><a href=\"#.html\">Perfil</a></li>\n"
+                + "          <li><a href=\"cadastro.html\">Cadastro</a></li>\n"
                 + "        </ul>\n"
                 + "      </nav>\n"
                 + "    </header>\n"
