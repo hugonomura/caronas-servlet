@@ -4,9 +4,17 @@
         <servlet-name>EfetuaLogin</servlet-name>
         <servlet-class>controle.EfetuaLogin</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>BuscaCidade</servlet-name>
+        <servlet-class>controle.BuscaCidade</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>EfetuaLogin</servlet-name>
         <url-pattern>/EfetuaLogin</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>BuscaCidade</servlet-name>
+        <url-pattern>/BuscaCidade</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

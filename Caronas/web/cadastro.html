@@ -31,8 +31,18 @@
             <input type="radio" name="sexo" id="masc" checked><label for="masc">M</label>
             <input type="radio" name="sexo" id="fem"><label for="fem">F</label></span></p>
           <p><span class="rotulo"><label for="endereco">Endereço</label></span><span class="campo"><input type="text" id="endereco"></span></p>
-          <p><span class="rotulo"><label for="cidade">Cidade</label></span><span class="campo"><input type="text" id="cidade"></span></p>
-          <p><span class="rotulo"><label for="estado">Estado</label></span><span class="campo"><input type="text" id="estado"></span></p>
+          <p><span class="rotulo"><label for="estado">Estado</label></span><span class="campo">
+            <select name="estado" id="estado">
+                <option value="" selected></option>
+                <option value="RJ">RJ</option>
+                <option value="SP">SP</option>
+                <option value="SC">SC</option>
+            </select>
+          </span></p>
+          <p><span class="rotulo"><label for="cidade">Cidade</label></span><span class="campo">
+            <select name="cidade" id="cidade">
+            </select>
+          </span></p>
           <p><span class="rotulo"><label for="rota">Rota</label></span><span class="campo">
             <select id="rota">
               <option>Av. General Carneiro</option>
@@ -99,6 +109,18 @@
         // fazendo o submit
         $('#cadastrar').click(function(){
           window.alert('Cadastro efetuado com sucesso!');
+        });
+        
+        // ajax
+        $('#estado').focusout(function(){
+          $.ajax({
+            type: "GET",
+            url: "BuscaCidade",
+            dataType: "html",
+            data: {uf: $('#estado').val() }
+          }).done(function(data){
+            $('#cidade').html(data);
+          });
         });
       });
     </script>

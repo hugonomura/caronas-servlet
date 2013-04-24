@@ -27,12 +27,12 @@ Como já temos um **index.html**, podemos excluir o arquivo **index.jsp**, novam
   
 # Editando o formulário...
 --
-Antes de implementarmos nosso **Servlet**, precisamos editar algumas coisas dentro do nosso `form`.  
-Como não queremos que a senha fique visível, iremos usar o método **post** e nossa **action** sera o nome do nosso **Servlet**, nesse caso, iremos chamá-lo de **EfetuaLogin**.  
+Antes de implementarmos nosso **Servlet**, precisamos editar algumas coisas dentro do nosso `form`.
+Como não queremos que a senha fique visível, iremos usar o método **post** e nossa **action** será o nome do nosso **Servlet**, nesse caso, iremos chamá-lo de **EfetuaLogin**.  
 Para que possamos recuperar os campos do lado do servidor, também devemos dar **nomes** aos nosso campos.  
 Nosso formulário vai ficar da seguinte forma:  
   
-    <form method="post" action="EfetuaLogin">
+    <form method="get" action="EfetuaLogin">
       ... <input type="text" id="login" name="login"> ...
       ... <input type="password" id="senha" name="senha"> ...
       ...
@@ -55,7 +55,7 @@ Clique em **Finalizar**.
 # Programando o Servlet
 --
 Toda a implementação do nosso **Servlet** será feita dentro do método `doGet`, uma vez que, estamos usando o método `get` no nosso formulário.  
-Podemos apagar a linha que está la.  
+Podemos apagar a linha que está lá.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img15.png">](#)  
   
 A validação que faremos será, caso os campos de **login** e **senha** possuam o mesmo valor e não sejam vazios, o login terá sido efetuado com sucesso, caso contrário, o login não será executado.  
@@ -128,7 +128,7 @@ Assim, a implementação do método ficaria:
                 + "      <nav id=\"menu\">\n"
                 + "        <ul>\n"
                 + "          <li><a href=\"index.html\" class=\"active\">Inicio</a></li>\n"
-                + "          <li><a href=\"#.html\">Perfil</a></li>\n"
+                + "          <li><a href=\"cadastro.html\">Cadastro</a></li>\n"
                 + "        </ul>\n"
                 + "      </nav>\n"
                 + "    </header>\n"
@@ -202,4 +202,4 @@ O resultado esperado após a implementação de tudo é:
   
 Note que, ao enviarmos a senha, não existe nenhum tipo de tratamento.  
 [<img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img16.png">](#)  
-Que tal mudar o método de envio do formulário para `GET`? Lembre-se que, devemos editar o método `doPost` também.  
+Que tal mudar o método de envio do formulário para `POST`? Lembre-se que, devemos editar o método `doPost` também.  
