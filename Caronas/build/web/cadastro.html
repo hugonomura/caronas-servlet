@@ -75,7 +75,7 @@
           var valor = element.val().replace(/[^a-z]/,'');
           element.val(valor);
         });
-        
+
         // limpando notificação do nome
         $('#username').focusout(function(){
           $('#desc-erro').fadeOut(1000, function(){
@@ -85,7 +85,7 @@
             $(this).html('');
           });
         });
-        
+
         // verificando se o e-maill é válido
         $('#email').focusout(function(){
           var filtro = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -105,14 +105,14 @@
             });
           }
         });
-        
+
         // fazendo o submit
         $('#cadastrar').click(function(){
           window.alert('Cadastro efetuado com sucesso!');
         });
-        
+
         // ajax
-        $('#estado').focusout(function(){
+        $('#estado').change(function(){
           $.ajax({
             type: "GET",
             url: "BuscaCidade",

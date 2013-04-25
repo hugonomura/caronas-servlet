@@ -1,10 +1,8 @@
 # Referências
 
 * http://api.jquery.com/jQuery.ajax/
-* http://api.jquery.com/focusin/
-* https://developer.mozilla.org/en-US/docs/DOM/Mozilla_event_reference/focusin
-* http://api.jquery.com/focusout/
-* https://developer.mozilla.org/en-US/docs/DOM/Mozilla_event_reference/focusout
+* http://api.jquery.com/change/
+* https://developer.mozilla.org/en-US/docs/DOM/Mozilla_event_reference/change
 
 --
 # Ajax
@@ -116,9 +114,9 @@ Após o seu **footer**, existe a tag **script** e dentro dela há:
               // alguns métodos de validação do form
       }
   
-Ao final dos métodos de validação, mas ainda dentro do `$(document).ready`, devem estar as chamadas do nosso Ajax, que deverá ser chamado sempre que um `Estado` for selecionado. Para isso, devemos chamar nosso **Ajax** quando nosso campo `Estado` perder o *foco*.  
+Ao final dos métodos de validação, mas ainda dentro do `$(document).ready`, devem estar as chamadas do nosso Ajax, que deverá ser chamado sempre que o valor do campo `Estado` for alterado. Para isso, devemos chamar nosso **Ajax** o valor do campo `Estado` for alterado, através do método `change`.  
   
-        $('#estado').focusout(function(){
+        $('#estado').change(function(){
             // ajax
         }
   
@@ -155,3 +153,4 @@ Explicando cada chave do *ajax*.
 `dataType` é o tipo de dado que o **Servlet** irá retornar;  
 `data` é um **json** com as chaves e valores que serão enviados para o servlet processar.  
 O método `.done` é o que irá preencher a lista de cidades com o valor retornado pela requisição **Ajax**, sendo que **data** é o que o servidor retornou.  
+
