@@ -11,7 +11,7 @@
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
   <script type="text/javascript" src="javascripts/script.js"></script>
 
-  <title>Tutorial Ajax + Servlet Java</title>
+  <title>Tutorial JSP</title>
   <meta name="description" content="">
 
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -22,7 +22,7 @@
 
   <div class="wrapper">
     <header>
-      <h1 class="title">Tutorial Ajax + Servlet Java</h1>
+      <h1 class="title">Tutorial JSP</h1>
     </header>
     <div id="container">
       <p class="tagline"></p>
@@ -31,183 +31,171 @@
         <div class="inner">
           <a href="https://github.com/hugonomura/caronas-servlet/tarball/master" class="download-button tar"><span>Download</span></a>
           <a href="https://github.com/hugonomura/caronas-servlet/zipball/master" class="download-button zip"><span>Download</span></a>
-          <a href="https://github.com/hugonomura/caronas-servlet" class="code">View Tutorial Ajax + Servlet Java on GitHub</a>
+          <a href="https://github.com/hugonomura/caronas-servlet" class="code">View Tutorial JSP on GitHub</a>
         </div>
         <span class="blc"></span><span class="trc"></span>
         </div>
         <article class="markdown-body">
-          <h1>Referências</h1>
-
-<ul>
-<li><a href="http://api.jquery.com/jQuery.ajax/">http://api.jquery.com/jQuery.ajax/</a></li>
-<li><a href="http://api.jquery.com/change/">http://api.jquery.com/change/</a></li>
-<li><a href="https://developer.mozilla.org/en-US/docs/DOM/Mozilla_event_reference/change">https://developer.mozilla.org/en-US/docs/DOM/Mozilla_event_reference/change</a></li>
-</ul><h2></h2>
-
-<h1>Ajax</h1>
-
-<p>Para usar Ajax em nossa aplicação, podemos começar tanto do lado servidor, quanto do lado cliente.<br>
-Nesse tutorial, optei por começar pelo lado servidor.  </p>
+          <h1>Caronas</h1>
 
 <h2></h2>
 
-<h1>O servlet</h1>
+<p>Continuando nosso projeto de caronas, agora iremos usar <strong>JSP</strong>.<br>
+Iremos mexer no método <strong>doPost</strong> do <em>controller</em> <code>EfetuaLogin</code>, e caso o usuário seja <code>adm</code>, irão ser abertas novas opções no menu.  </p>
 
-<p>Novamente, não é via de regra, mas para esse caso, irei criar um novo <em>Servlet</em> para tratar a requisição feita pelo cliente.<br>
-Para isso, basta clicar na raiz do <strong>projeto</strong>, <strong>novo</strong>, <strong>servlet</strong><br>
-Chamaremos o <strong>Servlet</strong> de <strong>BuscaCidade</strong> e colocaremos ele no <strong>pacote</strong> chamado <strong>controle</strong>.
-<a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img17.png"></a>  </p>
-
-<p>Clique em <code>Próximo</code>.<br>
-Deixa selecionado a caixa <code>Adicionar informações ao descritor de implantação (web.xml)</code>.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img18.png"></a>  </p>
-
-<p>Clique em <code>Finalizar</code>.<br>
-Agora vamos editar o método <strong>doGet</strong>, pois para usarmos o Ajax, iremos usar o método <strong>GET</strong>.<br>
-Podemos retirar a linha que está lá.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img19.png"></a>  </p>
-
-<p>Para realizarmos o processamento, devemos primeiro recuperar o dado sobre o estado que foi recebido, através do método <code>getParameter</code> pertencente a <strong>request</strong>.<br>
-Como o parâmetro passado pela página sera <code>uf</code>, vamos recuperá usando a seguinte linha:  </p>
-
-<pre><code>String estado = request.getParameter("uf");
-</code></pre>
-
-<p>Agora, nosso retorno será uma <strong>string</strong> também. Vamos inicializar ela com a string vazia.  </p>
-
-<pre><code>String cidades = "";
-</code></pre>
-
-<p>Como iremos retornar a lista já para o usuário, em formato <strong>html</strong>, é legal falarmos qual será o charset do retorno.<br>
-Para isso, basta usar o método <code>setCharacterEncoding</code>.  </p>
-
-<pre><code>response.setCharacterEncoding("UTF-8");
-</code></pre>
-
-<p>Com o parâmetro já recebido e a nossa <strong>string</strong> de retorno já inicializada, temos que fazer o devido processamento agora, fazendo com o que o retorno sejam as cidades associadas ao estado.  </p>
-
-<pre><code>if(estado.equals("SP")){
-  cidades += "&lt;option value=\"São Paulo\"&gt;São Paulo&lt;/option&gt;";
-  cidades += "&lt;option value=\"São Roque\"&gt;São Roque&lt;/option&gt;";
-  cidades += "&lt;option value=\"Sorocaba\"&gt;Sorocaba&lt;/option&gt;";
-}
-if(estado.equals("RJ")){
-  cidades += "&lt;option value=\"Angra dos reis\"&gt;Angra dos Reis&lt;/option&gt;";
-  cidades += "&lt;option value=\"Parati\"&gt;Parati&lt;/option&gt;";
-  cidades += "&lt;option value=\"Rio de Janeiro\"&gt;Rio de Janeiro&lt;/option&gt;";
-}
-if(estado.equals("SC")){
-  cidades += "&lt;option value=\"Bandeirante\"&gt;Bandeirante&lt;/option&gt;";
-  cidades += "&lt;option value=\"Florianópolis\"&gt;Florianópolis&lt;/option&gt;";
-  cidades += "&lt;option value=\"Princesa\"&gt;Princesa&lt;/option&gt;";
-}
-</code></pre>
-
-<p>Com tudo já feito, devemos retornar a <strong>string</strong> para o cliente, como já faríamos para qualquer outro <strong>servlet</strong>.  </p>
-
-<pre><code>PrintWriter writer = response.getWriter();
-writer.print(cidades);
-writer.close();
-</code></pre>
-
-<p>Feito isso, nosso <strong>servlet</strong> deverá ficar da seguinte forma:  </p>
-
-<pre><code>String estado = request.getParameter("uf");
-String cidades = "";
-response.setCharacterEncoding("UTF-8");
-if(estado.equals("SP")){
-  cidades += "&lt;option value=\"São Paulo\"&gt;São Paulo&lt;/option&gt;";
-  cidades += "&lt;option value=\"São Roque\"&gt;São Roque&lt;/option&gt;";
-  cidades += "&lt;option value=\"Sorocaba\"&gt;Sorocaba&lt;/option&gt;";
-}
-if(estado.equals("RJ")){
-  cidades += "&lt;option value=\"Angra dos reis\"&gt;Angra dos Reis&lt;/option&gt;";
-  cidades += "&lt;option value=\"Parati\"&gt;Parati&lt;/option&gt;";
-  cidades += "&lt;option value=\"Rio de Janeiro\"&gt;Rio de Janeiro&lt;/option&gt;";
-}
-if(estado.equals("SC")){
-  cidades += "&lt;option value=\"Bandeirante\"&gt;Bandeirante&lt;/option&gt;";
-  cidades += "&lt;option value=\"Florianópolis\"&gt;Florianópolis&lt;/option&gt;";
-  cidades += "&lt;option value=\"Princesa\"&gt;Princesa&lt;/option&gt;";
-}
-PrintWriter writer = response.getWriter();
-writer.print(cidades);
-writer.close();
-</code></pre>
-
-<h1>O cliente</h1>
+<h1>doPost</h1>
 
 <h2></h2>
 
-<p>Com nosso servidor já feito, agora nos resta fazer nosso cliente.<br>
-Certifique-se dos <strong>ids</strong> do campo <code>Estado</code> e <code>Cidade</code>, pois recuperaremos eles através do jQuery.<br>
-No meu caso, o campo <code>Estado</code> está da seguinte forma:  </p>
+<p>Dentro do método <strong>doPost</strong>, remova as linhas de código que estiverem nela, deixando apenas a declaração do método.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img20.png"></a>  </p>
 
-<pre><code>        &lt;select name="estado" id="estado"&gt;
-            &lt;option value="" selected&gt;&lt;/option&gt;
-            &lt;option value="RJ"&gt;RJ&lt;/option&gt;
-            &lt;option value="SP"&gt;SP&lt;/option&gt;
-            &lt;option value="SC"&gt;SC&lt;/option&gt;
-        &lt;/select&gt;
+<p>Vamos fazer a recuperação dos dados do formulário normalmente no <strong>servlet</strong>, da seguinte forma:  </p>
+
+<pre><code>  String login = request.getParameter("login");
+  String senha = request.getParameter("senha");
 </code></pre>
 
-<p>E o campo <code>Cidade</code> está da seguinte forma:  </p>
+<p>Podemos fazer também algum tipo de validação de <strong>login</strong> e <strong>senha</strong>, como ainda não temos acesso ao banco de dados, podemos verificar simplesmente se <strong>login</strong> e <strong>senha</strong> tem o mesmo valor, da seguinte forma:  </p>
 
-<pre><code>        &lt;select name="cidade" id="cidade"&gt;
-        &lt;/select&gt;
-</code></pre>
-
-<p>Note que o campo o <code>Estado</code> possui uma opção vazia, apenas para que nenhum estado esteja pré-selecionado quando o usuário desejar se cadastrar, enquanto o campo <code>Cidade</code> não possui nenhuma opção, pois o servidor irá retornar as opções de acordo com o <code>Estado</code> que estiver selecionado.  </p>
-
-<p>Com isso certificado, basta alterar o nosso <strong>script</strong>.<br>
-Após o seu <strong>footer</strong>, existe a tag <strong>script</strong> e dentro dela há:  </p>
-
-<pre><code>  $(document).ready(function(){
-          // alguns métodos de validação do form
+<pre><code>  if(login.equals(senha)){
+     // aqui faremos o redirecionamento para a página 'logado'
+  }else{
+     // aqui faremos o redirecionamento para a página de login
   }
 </code></pre>
 
-<p>Ao final dos métodos de validação, mas ainda dentro do <code>$(document).ready</code>, devem estar as chamadas do nosso Ajax, que deverá ser chamado sempre que o valor do campo <code>Estado</code> for alterado. Para isso, devemos chamar nosso <strong>Ajax</strong> o valor do campo <code>Estado</code> for alterado, através do método <code>change</code>.  </p>
+<p>Agora, por uma questão de comodidade, faremos o redirecionamento de volta para a página de <strong>login</strong>, caso os campos <code>login</code> e <code>senha</code> não possuam o mesmo valor. Para isso, usaremos o método <code>sendRedirect</code>, que pertence ao objeto <strong>response</strong>.<br>
+Para isso, basta fazermos isso:  </p>
 
-<pre><code>    $('#estado').change(function(){
-        // ajax
+<pre><code>  response.sendRedirect("/index.html");
+</code></pre>
+
+<p>Com isso feito, voltemos para o nosso <code>if(login.equals(senha))</code> para realizar o redirecionamento para a página logado.<br>
+Para fazermos isso, precisamos do método <code>foward</code> pertencente a classe <strong>RequestDispatcher</strong>. Basta criarmos uma instância da classe <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
+
+<pre><code>  RequestDispatcher rd = null;
+</code></pre>
+
+<p>Provavelmente, o <strong>Netbeans</strong> está indicando um erro nessa linha, pois não realizamos o import dessa classe. Resolvemos isso criando o import para <strong>javax.servlet.RequestDispatcher</strong> (basta adicionar <code>import javax.servlet.RequestDispatcher;</code> junto aos imports no inicio da classe)...<br>
+ou podemos simplesmente clicar sobre o ícone apontando o erro na linha...<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img21.png"></a>  </p>
+
+<p>e pedir para a <strong>IDE</strong> realizar o import.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img22.png"></a>  </p>
+
+<p>Podemos adicionar um novo atributo ao objeto <code>request</code>, que chamaremos de <strong>admin</strong> que caso ela seja <strong>true</strong>, significa que o <strong>usuário</strong> é um <strong>admin</strong> e, caso contrário, o <strong>usuário</strong> é um usuário comum do sistema, para isso basta fazermos isso:  </p>
+
+<pre><code>    request.setAttribute("admin", true);
+</code></pre>
+
+<p>Feito isso, já temos tudo que precisamos para fazermos o devido tratamento na <strong>view</strong>, nos restando apenas redirecionar a requisição para a <strong>view</strong> apropriada. Para isso basta usarmos o <strong>RequestDispatcher</strong>, da seguinte forma:  </p>
+
+<pre><code>     rd = request.getRequestDispatcher("/viewLogado.jsp");
+     rd.forward(request, response);
+</code></pre>
+
+<p>Assim, a nossa página <code>viewLogado</code> irá tratar a requisição.  </p>
+
+<h1>Criando a view...</h1>
+
+<h2></h2>
+
+<p>Para criar uma nova página <strong>JSP</strong>, basta clicarmos com o <strong>botão direito</strong> em <code>Páginas Web</code> &gt; <code>Novo</code> &gt; <code>JSP...</code>  </p>
+
+<p>Mudar o nome do arquivo para viewLogado...
+<a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img23.png"></a>  </p>
+
+<p>E clicar em <code>Finalizar</code>.  </p>
+
+<h1>Editando a view...</h1>
+
+<h2></h2>
+
+<p>Agora que já temos a <strong>view</strong> criada, podemos editá-la de acordo com o que realmente queremos fazer.<br>
+Podemos apagar todo o conteúdo do arquivo gerado e substituir pelo conteúdo do nosso <code>index.html</code>, apenas para termos um ponto de partida.<br>
+Como queremos editar o menu superior, devemos encontrar as linhas do menu e alterá-las para aparecer diferentes opções caso o usuário seja do tipo <strong>admin</strong>, conforme o <strong>atributo</strong> que registramos no nosso <strong>servlet</strong>.<br><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img24.png"></a>  </p>
+
+<p><a href="#"><img src="https://raw.github.com/hugonomura/imagens-tutorial/master/img25.png"></a>  </p>
+
+<h1>Resultado</h1>
+
+<h2></h2>
+
+<p>Ao fim desse tutorial, o método <code>doPost</code> do <strong>servlet</strong> <code>EfetuaLogin</code>, deve estar assim:  </p>
+
+<pre><code>    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String login = request.getParameter("login");
+        String senha = request.getParameter("senha");
+
+        if(login.equals(senha)){
+              if(login.equals("adm")){
+                  RequestDispatcher rd = null;
+                  request.setAttribute("admin", true);
+                  rd = request.getRequestDispatcher("/viewLogado.jsp");
+                  rd.forward(request, response);
+              }
+        }else{
+            response.sendRedirect("/index.html");
+        }
+
     }
 </code></pre>
 
-<p>Para usarmos Ajax no cliente, devemos lembrar sempre de:  </p>
+<p>E a página <code>viewLogado</code>, deve estar assim:  </p>
 
-<ol>
-<li>Qual método de envio das informações iremos usar?</li>
-<li>Qual o caminho para o nosso Servlet?</li>
-<li>Qual o formato dos dados iremos receber?</li>
-<li>Quais dados serão enviados?</li>
-<li>O quer fazer após o Servlet retornar as informações?</li>
-</ol><p>No nosso caso:  </p>
+<pre><code>    &lt;!DOCTYPE html&gt;
+    &lt;html&gt;
+      &lt;head&gt;
+        &lt;title&gt;Caronas | Inicio&lt;/title&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;link rel="stylesheet" type="text/css" href="estilo.css"&gt;
+        &lt;script src="http://code.jquery.com/jquery-1.9.1.js"&gt;&lt;/script&gt;
+      &lt;/head&gt;
+      &lt;body&gt;
+        &lt;header class="container"&gt;
+          &lt;h1 id="logo"&gt;&lt;a href="index.html"&gt;Caronas&lt;/a&gt;&lt;/h1&gt;
+          &lt;nav id="menu"&gt;
+            &lt;ul&gt;
+                &lt;% 
+                    if(request.getParameter("admin")){
+                  %&gt;
+                &lt;li&gt;&lt;a href="#.html" class="active"&gt;Autorização de usuário&lt;/a&gt;&lt;/li&gt;
+                &lt;li&gt;&lt;a href="#.html"&gt;Cadastro de Rotas&lt;/a&gt;&lt;/li&gt;
+                &lt;%
+                    }
+                  %&gt;
+            &lt;/ul&gt;
+          &lt;/nav&gt;
+        &lt;/header&gt;
+        &lt;section class="container"&gt;
+          &lt;article id="form"&gt;
+            &lt;header&gt;
+              &lt;h1&gt;Login&lt;/h1&gt;
+            &lt;/header&gt;
+            &lt;form method="post" action="EfetuaLogin"&gt;
+              &lt;p&gt;&lt;label for="login"&gt;Login&lt;/label&gt;&lt;input type="text" id="login" name="login"&gt;&lt;/p&gt;
+              &lt;p&gt;&lt;label for="senha"&gt;Senha&lt;/label&gt;&lt;input type="password" id="senha" name="senha"&gt;&lt;/p&gt;
+              &lt;p&gt;&lt;input type="submit" value="Logar!"&gt;&lt;/p&gt;
+            &lt;/form&gt;
+          &lt;/article&gt;
+        &lt;/section&gt;
+        &lt;footer class="container"&gt;
+          &lt;p&gt;Desenvolvimento Web - UFSCar Sorocaba - 2013&lt;/p&gt;
+        &lt;/footer&gt;
+        &lt;script&gt;
+          $(document).ready(function(){
 
-<ol>
-<li>Como alteramos o método <code>doGet</code> no <strong>Servlet</strong>, devemos enviar usando <strong>GET</strong>.</li>
-<li>Como adicionamos no nosso arquivo <code>web.xml</code>, o caminho é, simplesmente, <code>BuscaCidade</code>.</li>
-<li>Os dados que o <strong>Servlet</strong> retorna são <code>HTMl</code>.</li>
-<li>O dado que será enviado é o valor do campo estado, sendo que o nome do parâmetro deve ser <code>uf</code>, como é esperado no <strong>Servlet</strong>.</li>
-<li>Preencher a lista de cidades associadas ao estado.</li>
-</ol><p>Para realizar isso, basta fazermos o seguinte:  </p>
-
-<pre><code>      $.ajax({
-        type: "GET",
-        url: "BuscaCidade",
-        dataType: "html",
-        data: {uf: $('#estado').val() }
-      }).done(function(data){
-        $('#cidade').html(data);
-      });
+          });
+        &lt;/script&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
 </code></pre>
-
-<p>Explicando cada chave do <em>ajax</em>.<br><code>type</code> é o método que será usado para o envio das informações para o servidor;<br><code>url</code> é o caminho para o <strong>Servlet</strong> que irá responder a requisição;<br><code>dataType</code> é o tipo de dado que o <strong>Servlet</strong> irá retornar;<br><code>data</code> é um <strong>json</strong> com as chaves e valores que serão enviados para o servlet processar.<br>
-O método <code>.done</code> é o que irá preencher a lista de cidades com o valor retornado pela requisição <strong>Ajax</strong>, sendo que <strong>data</strong> é o que o servidor retornou.  </p>
         </article>
       </div>
     </div>
     <footer>
       <div class="owner">
-      <p><a href="https://github.com/hugonomura" class="avatar"><img src="https://secure.gravatar.com/avatar/aba3372625d61846c87c2f8b6cd50659?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/hugonomura">hugonomura</a> maintains <a href="https://github.com/hugonomura/caronas-servlet">Tutorial Ajax + Servlet Java</a></p>
+      <p><a href="https://github.com/hugonomura" class="avatar"><img src="https://secure.gravatar.com/avatar/aba3372625d61846c87c2f8b6cd50659?s=30&amp;d=https://a248.e.akamai.net/assets.github.com%2Fimages%2Fgravatars%2Fgravatar-user-420.png" width="48" height="48"/></a> <a href="https://github.com/hugonomura">hugonomura</a> maintains <a href="https://github.com/hugonomura/caronas-servlet">Tutorial JSP</a></p>
 
 
       </div>
