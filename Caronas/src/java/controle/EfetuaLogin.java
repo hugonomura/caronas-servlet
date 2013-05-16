@@ -6,6 +6,7 @@ package controle;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -85,8 +86,20 @@ public class EfetuaLogin extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
           throws ServletException, IOException {
-//      processRequest(request, response);
-    this.doGet(request, response);
+      String login = request.getParameter("login");
+      String senha = request.getParameter("senha");
+      
+      if(login.equals(senha)){
+            if(login.equals("adm")){
+                RequestDispatcher rd = null;
+                request.setAttribute("admin", true);
+                rd = request.getRequestDispatcher("/viewLogado.jsp");
+                rd.forward(request, response);
+            }
+      }else{
+          response.sendRedirect("/index.html");
+      }
+      
   }
   
   private String constroiPagina(String usuario){

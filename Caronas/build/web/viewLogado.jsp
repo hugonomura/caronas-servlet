@@ -11,8 +11,14 @@
       <h1 id="logo"><a href="index.html">Caronas</a></h1>
       <nav id="menu">
         <ul>
-          <li><a href="index.html" class="active">Inicio</a></li>
-          <li><a href="cadastro.html">Cadastro</a></li>
+            <% 
+                if(request.getParameter("admin")){
+              %>
+            <li><a href="#.html" class="active">Autorização de usuário</a></li>
+            <li><a href="#.html">Cadastro de Rotas</a></li>
+            <%
+                }
+              %>
         </ul>
       </nav>
     </header>
